@@ -149,7 +149,48 @@ async function fetchRandomCocktail() {
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
-  // Fill in
+  const randomCocktail = cocktail[Math.floor(Math.random() * cocktail.length)];
+  const drinkName = randomCocktail.strDrink
+  const drinkThumb = randomCocktail.strDrinkThumb
+
+  const drinkContainer = document.querySelector('.cocktail')
+  const img = document.createElement('img')
+  img.src = drinkThumb
+  drinkContainer.append(img)
+
+  const paragraph = document.createElement('p')
+  paragraph.textContent = drinkName
+  drinkContainer.append(drinkName)
+
+
+  // ingredients and measurements
+  const ingredients = []
+  const measurements = []
+
+  for (const cocktailItem in randomCocktail){
+    if (cocktailItem.includes('strIngredient') && randomCocktail[cocktailItem] !== null) {
+      ingredients.push(randomCocktail[cocktailItem])}
+    else if (cocktailItem.includes('strMeasure') && randomCocktail[cocktailItem] !== null) {
+      measurements.push(randomCocktail[cocktailItem])}  
+  }
+  
+  // table with measurements and ingredients
+  const table = document.createElement('table')
+
+  for (let i = 0; i < ingredients.length; i++) {
+    const tableRow = document.createElement('tr')
+    const tableData1 = document.createElement('td')
+    const tableData2 = document.createElement('td')
+
+    tableData1.textContent = ingredients[i]
+    tableData2.textContent = measurements[i]
+
+    tableRow.append(tableData1)
+    tableRow.append(tableData2)
+    table.append(tableRow)
+  }
+
+  drinkContainer.append(table)
 }
 
 /*
