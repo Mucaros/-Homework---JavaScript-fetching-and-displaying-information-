@@ -51,8 +51,8 @@ function init() {
 
 async function fetchRandomMeal() {
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
-  const data = response.json()
-  return data
+  const data = await response.json()
+  return data.meals[0]
 }
 /*
 Display Meal Data in the DOM
@@ -62,22 +62,20 @@ Receives a meal object with fields like:
 */
 
 function displayMealData(meal) {
-  const mealInfo = meal.meals[0]
-
   // current meal info
-  const currentMeal = mealInfo.strMeal
-  const mealThumb = mealInfo.strMealThumb
-  const instructions = mealInfo.strInstructions
-  const category = mealInfo.strCategory
+  const currentMeal = meal.strMeal
+  const mealThumb = meal.strMealThumb
+  const instructions = meal.strInstructions
+  const category = meal.strCategory
   const ingredients = []
   const measurements = []
 
-  for (const mealItem in mealInfo) {
-    if (mealItem.includes('strIngredient') && mealInfo[mealItem] !== '') {
-      ingredients.push(mealInfo[mealItem])
+  for (const mealItem in meal) {
+    if (mealItem.includes('strIngredient') && meal[mealItem] !== '') {
+      ingredients.push(meal[mealItem])
     }
-    else if (mealItem.includes('strMeasure') && mealInfo[mealItem] !== '') {
-      measurements.push(mealInfo[mealItem])
+    else if (mealItem.includes('strMeasure') && meal[mealItem] !== '') {
+      measurements.push(meal[mealItem])
     }
   }
   
@@ -131,16 +129,20 @@ Don't forget encodeURIComponent()
 If no cocktails found, fetch random
 */
 
-function fetchCocktailByDrinkIngredient(drinkIngredient) {
-  // Fill in
+async function fetchCocktailByDrinkIngredient(drinkIngredient) {
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkIngredient}`)
+  const data = await response.json()
+  return data.drinks
 }
 
 /*
 Fetch a Random Cocktail (backup in case nothing is found by the search)
 Returns a Promise that resolves to cocktail object
 */
-function fetchRandomCocktail() {
-  // Fill in
+async function fetchRandomCocktail() {
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+  const data = await response.json()
+  return data
 }
 
 /*
