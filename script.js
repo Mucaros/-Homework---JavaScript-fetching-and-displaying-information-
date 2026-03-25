@@ -50,10 +50,10 @@ function init() {
  */
 
 async function fetchRandomMeal() {
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
-    const data = response.json()
-    return data
-  }
+  const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+  const data = response.json()
+  return data
+}
 /*
 Display Meal Data in the DOM
 Receives a meal object with fields like:
@@ -62,9 +62,29 @@ Receives a meal object with fields like:
 */
 
 function displayMealData(meal) {
-    const mealOneInfo = meal.meals[0]
-    console.log(mealOneInfo.strMeal)
+  const mealInfo = meal.meals[0]
+  
+  // current meal info
+  const currentMeal = mealInfo.strMeal
+  const mealThumb = mealInfo.strMealThumb
+  const instructions = mealInfo.strInstructions
+  const category = mealInfo.strCategory
+  const ingredients = []
+  const measurements = []
+
+  for(const mealItem in mealInfo){
+    if (mealItem.includes('strIngredient') & mealInfo[mealItem] !== ''){
+      ingredients.push(mealInfo[mealItem])
+    }
+    else if(mealItem.includes('strMeasure') & mealInfo[mealItem] !== ''){
+      measurements.push(mealInfo[mealItem])
+    }
+  }
+
+  
+
 }
+
 
 /*
 Convert MealDB Category to a TheCocktailDB Spirit
@@ -85,7 +105,7 @@ If no cocktails found, fetch random
 */
 
 function fetchCocktailByDrinkIngredient(drinkIngredient) {
-    // Fill in
+  // Fill in
 }
 
 /*
@@ -93,14 +113,14 @@ Fetch a Random Cocktail (backup in case nothing is found by the search)
 Returns a Promise that resolves to cocktail object
 */
 function fetchRandomCocktail() {
-    // Fill in
+  // Fill in
 }
 
 /*
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
-    // Fill in
+  // Fill in
 }
 
 /*
