@@ -63,7 +63,7 @@ Receives a meal object with fields like:
 
 function displayMealData(meal) {
   const mealInfo = meal.meals[0]
-  
+
   // current meal info
   const currentMeal = mealInfo.strMeal
   const mealThumb = mealInfo.strMealThumb
@@ -72,20 +72,25 @@ function displayMealData(meal) {
   const ingredients = []
   const measurements = []
 
-  for(const mealItem in mealInfo){
-    if (mealItem.includes('strIngredient') && mealInfo[mealItem] !== ''){
+  for (const mealItem in mealInfo) {
+    if (mealItem.includes('strIngredient') && mealInfo[mealItem] !== '') {
       ingredients.push(mealInfo[mealItem])
     }
-    else if(mealItem.includes('strMeasure') && mealInfo[mealItem] !== ''){
+    else if (mealItem.includes('strMeasure') && mealInfo[mealItem] !== '') {
       measurements.push(mealInfo[mealItem])
     }
   }
-
-  const mealInfoArray = [currentMeal, mealThumb, instructions, category]
+  
+  const mealInfoArray = [currentMeal, instructions, category]
   const mealContainer = document.querySelector('.meal')
   const table = document.createElement('table')
+  const mealImg = document.createElement('img')
+  mealImg.src = mealThumb
 
-  for (const mealVariableInfo of mealInfoArray){
+
+  mealContainer.append(mealImg)
+
+  for (const mealVariableInfo of mealInfoArray) {
     const paragraph = document.createElement('p')
     paragraph.textContent = mealVariableInfo
     mealContainer.append(paragraph)
@@ -93,7 +98,7 @@ function displayMealData(meal) {
 
   mealContainer.append(table)
 
-for (let i = 0; i < ingredients.length; i++){
+  for (let i = 0; i < ingredients.length; i++) {
     const tableRow = document.createElement('tr')
     const tableData1 = document.createElement('td')
     const tableData2 = document.createElement('td')
@@ -104,7 +109,7 @@ for (let i = 0; i < ingredients.length; i++){
     tableRow.append(tableData1)
     tableRow.append(tableData2)
     table.append(tableRow)
-  } 
+  }
 }
 
 
