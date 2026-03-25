@@ -139,11 +139,17 @@ async function fetchCocktailByDrinkIngredient(drinkIngredient) {
 Fetch a Random Cocktail (backup in case nothing is found by the search)
 Returns a Promise that resolves to cocktail object
 */
-async function fetchRandomCocktail() {
+async function fetchRandomCocktail(drinkIngredient) {
   const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
   const data = await response.json()
-  return data
+    
+  if (!data.drinks) {
+    return fetchRandomCocktail()
+  }
+  
+  return data.drinks
 }
+
 
 /*
 Display Cocktail Data in the DOM
