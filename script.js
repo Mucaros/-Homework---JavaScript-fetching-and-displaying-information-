@@ -48,24 +48,29 @@ function init() {
  Fetch a Random Meal from TheMealDB
  Returns a Promise that resolves with the meal object
  */
-function fetchRandomMeal() {
-    // Fill in
-}
 
+async function fetchRandomMeal() {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+    const data = response.json()
+    return data
+  }
 /*
 Display Meal Data in the DOM
 Receives a meal object with fields like:
   strMeal, strMealThumb, strCategory, strInstructions,
   strIngredientX, strMeasureX, etc.
 */
+
 function displayMealData(meal) {
-    // Fill in
+    const mealOneInfo = meal.meals[0]
+    console.log(mealOneInfo.strMeal)
 }
 
 /*
 Convert MealDB Category to a TheCocktailDB Spirit
 Looks up category in our map, or defaults to 'cola'
 */
+
 function mapMealCategoryToDrinkIngredient(category) {
   if (!category) return "cola";
   return mealCategoryToCocktailIngredient[category] || "cola";
@@ -78,6 +83,7 @@ We call https://www.thecocktaildb.com/api/json/v1/1/search.php?s=DRINK_INGREDIEN
 Don't forget encodeURIComponent()
 If no cocktails found, fetch random
 */
+
 function fetchCocktailByDrinkIngredient(drinkIngredient) {
     // Fill in
 }
