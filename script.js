@@ -73,16 +73,38 @@ function displayMealData(meal) {
   const measurements = []
 
   for(const mealItem in mealInfo){
-    if (mealItem.includes('strIngredient') & mealInfo[mealItem] !== ''){
+    if (mealItem.includes('strIngredient') && mealInfo[mealItem] !== ''){
       ingredients.push(mealInfo[mealItem])
     }
-    else if(mealItem.includes('strMeasure') & mealInfo[mealItem] !== ''){
+    else if(mealItem.includes('strMeasure') && mealInfo[mealItem] !== ''){
       measurements.push(mealInfo[mealItem])
     }
   }
 
-  
+  const mealInfoArray = [currentMeal, mealThumb, instructions, category]
+  const mealContainer = document.querySelector('.meal')
+  const table = document.createElement('table')
 
+  for (const mealVariableInfo of mealInfoArray){
+    const paragraph = document.createElement('p')
+    paragraph.textContent = mealVariableInfo
+    mealContainer.append(paragraph)
+  }
+
+  mealContainer.append(table)
+
+for (let i = 0; i < ingredients.length; i++){
+    const tableRow = document.createElement('tr')
+    const tableData1 = document.createElement('td')
+    const tableData2 = document.createElement('td')
+
+    tableData1.textContent = ingredients[i]
+    tableData2.textContent = measurements[i]
+
+    tableRow.append(tableData1)
+    tableRow.append(tableData2)
+    table.append(tableRow)
+  } 
 }
 
 
