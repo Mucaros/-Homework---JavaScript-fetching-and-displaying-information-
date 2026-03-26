@@ -96,6 +96,18 @@ function displayMealData(meal) {
 
   mealContainer.append(table)
 
+  //adds a youtube video for the recipe, if present
+  if(meal.strYoutube){
+    const video=meal.strYoutube.split("v=")[1];
+    const iframe=document.createElement("iframe");
+
+    iframe.src=`https://www.youtube.com/embed/${videoId}`;
+    iframe.width="300";
+    iframe.height="200";
+
+    mealContainer.append(iframe);
+  }
+
   for (let i = 0; i < ingredients.length; i++) {
     const tableRow = document.createElement('tr')
     const tableData1 = document.createElement('td')
