@@ -78,7 +78,7 @@ function displayMealData(meal) {
       measurements.push(meal[mealItem])
     }
   }
-  
+
   const mealInfoArray = [currentMeal, instructions, category]
   const mealContainer = document.querySelector('.meal')
   const table = document.createElement('table')
@@ -97,13 +97,12 @@ function displayMealData(meal) {
   mealContainer.append(table)
 
   //adds a youtube video for the recipe, if present
-  if(meal.strYoutube){
-    const video=meal.strYoutube.split("v=")[1];
-    const iframe=document.createElement("iframe");
-
-    iframe.src=`https://www.youtube.com/embed/${videoId}`;
-    iframe.width="300";
-    iframe.height="200";
+  if (meal.strYoutube) {
+    const iframe = document.createElement("iframe");
+    const youtubeId = meal.strYoutube.split('v=')[1];
+    iframe.src = `https://www.youtube.com/embed/${youtubeId}`;
+    iframe.width = "300";
+    iframe.height = "200";
 
     mealContainer.append(iframe);
   }
@@ -154,11 +153,11 @@ Returns a Promise that resolves to cocktail object
 async function fetchRandomCocktail(drinkIngredient) {
   const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
   const data = await response.json()
-    
+
   if (!data.drinks) {
     return fetchRandomCocktail()
   }
-  
+
   return data.drinks
 }
 
@@ -185,13 +184,15 @@ function displayCocktailData(cocktail) {
   const ingredients = []
   const measurements = []
 
-  for (const cocktailItem in randomCocktail){
+  for (const cocktailItem in randomCocktail) {
     if (cocktailItem.includes('strIngredient') && randomCocktail[cocktailItem] !== null) {
-      ingredients.push(randomCocktail[cocktailItem])}
+      ingredients.push(randomCocktail[cocktailItem])
+    }
     else if (cocktailItem.includes('strMeasure') && randomCocktail[cocktailItem] !== null) {
-      measurements.push(randomCocktail[cocktailItem])}  
+      measurements.push(randomCocktail[cocktailItem])
+    }
   }
-  
+
   // table with measurements and ingredients
   const table = document.createElement('table')
 
