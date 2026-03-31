@@ -32,6 +32,8 @@ const mealCategoryToCocktailIngredient = {
 */
 
 function init() {
+  document.getElementById("loading").style.display="block";
+
   fetchRandomMeal()
     .then((meal) => {
       displayMealData(meal);
@@ -40,6 +42,7 @@ function init() {
     })
     .then((cocktail) => {
       displayCocktailData(cocktail);
+      document.getElementById("loading").style.display="none";
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -85,7 +88,7 @@ function displayMealData(meal) {
     }
   }
 
-  const mealInfoArray = [currentMeal, instructions, category]
+  const mealInfoArray = [currentMeal, instructions]
   const table = document.createElement('table')
   const mealImg = document.createElement('img')
   mealImg.src = mealThumb
@@ -97,6 +100,10 @@ function displayMealData(meal) {
     paragraph.textContent = mealVariableInfo
     mealContainer.append(paragraph)
   }
+
+  const categoryP=document.createElement("p");
+  categoryP.textContent="Category: "+category;
+  mealContainer.append(categoryP);
 
   mealContainer.append(table)
 
@@ -169,16 +176,17 @@ async function fetchRandomCocktail(drinkIngredient) {
   return data.drinks
 }
 
-
 /*
 Display Cocktail Data in the DOM
 */
 function displayCocktailData(cocktail) {
+  const drinkContainer = document.querySelector('.cocktail')
+  drinkContainer.innerHTML="";
+
   const randomCocktail = cocktail[Math.floor(Math.random() * cocktail.length)];
   const drinkName = randomCocktail.strDrink
   const drinkThumb = randomCocktail.strDrinkThumb
 
-  const drinkContainer = document.querySelector('.cocktail')
   const img = document.createElement('img')
   img.src = drinkThumb
   drinkContainer.append(img)
