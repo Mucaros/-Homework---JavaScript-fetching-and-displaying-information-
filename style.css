@@ -52,12 +52,37 @@ td{
   text-align: left;
 }
 
+button{
+  background-color: white;
+  padding:10px 15px;
+  border: none;
+  border-radius: 10px;
+  margin: 20px auto;
+  cursor: pointer; 
+  transition: 0.2s;
+  font-size: 22px;
+  display: block;
+  color: rgb(124, 150, 151);
+}
+
 .meal:hover,
 .cocktail:hover{
   transform: scale(1.02);
 }
 
+button:hover{
+  background-color:white; 
+  transform: scale(1.02);
+  border: 2px solid rgb(42, 63, 63);
+}
+
 iframe{
   margin-top: 10px;
   border-radius: 10px;
+}
+
+#loading{
+  text-align: center;
+  color: white;
+  display: none;
 }

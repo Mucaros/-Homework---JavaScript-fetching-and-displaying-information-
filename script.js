@@ -2,6 +2,7 @@
 Mapping from MealDB Categories to TheCocktailDB drink ingredient
 You can customize or expand this object to suit your needs.
 */
+
 const mealCategoryToCocktailIngredient = {
   Beef: "whiskey",
   Chicken: "gin",
@@ -21,14 +22,15 @@ const mealCategoryToCocktailIngredient = {
 };
 
 /*
-    2) Main Initialization Function
-       Called on page load to start all the requests:
-       - Fetch random meal
-       - Display meal
-       - Map meal category to spirit
-       - Fetch matching (or random) cocktail
-       - Display cocktail
+2) Main Initialization Function
+  Called on page load to start all the requests:
+  - Fetch random meal
+  - Display meal
+  - Map meal category to spirit
+  - Fetch matching (or random) cocktail
+  - Display cocktail
 */
+
 function init() {
   fetchRandomMeal()
     .then((meal) => {
@@ -45,15 +47,16 @@ function init() {
 }
 
 /*
- Fetch a Random Meal from TheMealDB
- Returns a Promise that resolves with the meal object
- */
+Fetch a Random Meal from TheMealDB
+Returns a Promise that resolves with the meal object
+*/
 
 async function fetchRandomMeal() {
   const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
   const data = await response.json()
   return data.meals[0]
 }
+
 /*
 Display Meal Data in the DOM
 Receives a meal object with fields like:
@@ -63,6 +66,9 @@ Receives a meal object with fields like:
 
 function displayMealData(meal) {
   // current meal info
+  const mealContainer=document.querySelector('.meal');
+  mealContainer.innerHTML="";
+
   const currentMeal = meal.strMeal
   const mealThumb = meal.strMealThumb
   const instructions = meal.strInstructions
@@ -80,11 +86,9 @@ function displayMealData(meal) {
   }
 
   const mealInfoArray = [currentMeal, instructions, category]
-  const mealContainer = document.querySelector('.meal')
   const table = document.createElement('table')
   const mealImg = document.createElement('img')
   mealImg.src = mealThumb
-
 
   mealContainer.append(mealImg)
 
@@ -121,7 +125,6 @@ function displayMealData(meal) {
   }
 }
 
-
 /*
 Convert MealDB Category to a TheCocktailDB Spirit
 Looks up category in our map, or defaults to 'cola'
@@ -143,6 +146,11 @@ If no cocktails found, fetch random
 async function fetchCocktailByDrinkIngredient(drinkIngredient) {
   const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkIngredient}`)
   const data = await response.json()
+
+  if(!data.drinks){
+    return fetchRandomCocktail();
+  }
+
   return data.drinks
 }
 
@@ -177,7 +185,7 @@ function displayCocktailData(cocktail) {
 
   const paragraph = document.createElement('p')
   paragraph.textContent = drinkName
-  drinkContainer.append(drinkName)
+  drinkContainer.append(paragraph)
 
 
   // ingredients and measurements
@@ -209,6 +217,11 @@ function displayCocktailData(cocktail) {
     table.append(tableRow)
   }
 
+  //instructions to the cocktails as well
+  const instructions=document.createElement("p");
+  instructions.textContent=randomCocktail.strInstructions;
+
+  drinkContainer.append(instructions);
   drinkContainer.append(table)
 }
 
